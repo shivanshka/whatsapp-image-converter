@@ -6,7 +6,6 @@ import shutil
 
 app = Flask(__name__)
 app.secret_key= APP_SECRET_KEY
-app.config['UPLOAD_FOLDER'] = UPLOADED_PHOTO_SAVING_FOLDER_KEY
 
 @app.route('/', methods=['GET'])
 def home():
@@ -19,8 +18,6 @@ def save_photos():
             files = request.files.getlist("files")
             folder = UPLOADED_PHOTO_SAVING_FOLDER_KEY
 
-            flash("File uploaded!!","success")
-
             if os.path.isdir(folder):
                 shutil.rmtree(folder)
             os.mkdir(folder)
@@ -28,7 +25,7 @@ def save_photos():
                 file.save(os.path.join(folder,file.filename))
             
             output_file = Service().start_process()
-            path = os.path.basename(output_file)
+            flash("File uploaded!!","success")
             flash("Files Converted Successfully!!","success")
             return send_file(output_file,as_attachment=True)
 
@@ -37,4 +34,4 @@ def save_photos():
             return redirect(url_for('home'))
         
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run()
