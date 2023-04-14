@@ -19,7 +19,7 @@ class Service:
                 im = Image.open(os.path.join(self.upload_folder, file))
                 im = im.save(os.path.join(OUTPUT_FILES,f"{counter}.jpg"))
                 counter+=1
-        shutil.make_archive(OUTPUT_FILES, 'zip',OUTPUT_FILES)
+        shutil.make_archive(CURRENT_TIMESTAMP, 'zip',OUTPUT_FILES)
         shutil.rmtree(self.upload_folder)
         shutil.rmtree(OUTPUT_FILES)
-        return OUTPUT_FILES+".zip"
+        return CURRENT_TIMESTAMP+".zip"
